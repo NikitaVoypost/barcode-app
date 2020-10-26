@@ -70,7 +70,7 @@ const ScannerComponent = ({ }) => {
             if (videoInputDevices.length > 1) {
                 selectedDeviceId = selectRef.current.value;
             } else {
-                selectedDeviceId = videoInputDevices[0].deviceId
+                selectedDeviceId = videoInputDevices[0].deviceId;
             }
 
             codeReader.decodeFromVideoDevice(selectedDeviceId, videoRef.current, (result) => {
@@ -79,13 +79,13 @@ const ScannerComponent = ({ }) => {
                         `display: block;
                         top: ${result.resultPoints[0].x}px; left:${result.resultPoints[0].x}px; 
                         width:${result.resultPoints[1].x - result.resultPoints[0].x}px; 
-                        height:${(result.resultPoints[1].x - result.resultPoints[0].x) / 1.5}px;`)
-                    setCurrentCode(result.text)
+                        height:${(result.resultPoints[1].x - result.resultPoints[0].x) / 1.5}px;`);
+                    setCurrentCode(result.text);
                 } else {
-                    codePositionRef.current.setAttribute('style', 'display: none;')
+                    codePositionRef.current.setAttribute('style', 'display: none;');
                 }
                 if (result && !codeResultRef.current.includes(result.text)) {
-                    codeResultRef.current.push(result.text)
+                    codeResultRef.current.push(result.text);
                 }
             }).catch((err) => {
                 console.error(err)
@@ -94,18 +94,18 @@ const ScannerComponent = ({ }) => {
     };
 
     function handleClickApply() {
-        const result = codeResultRef.current.filter(code => !deletedCodesRef.current.includes(code))
-        alert(result)
-        stopMediaTracks(currentStream)
+        const result = codeResultRef.current.filter(code => !deletedCodesRef.current.includes(code));
+        alert(result.join(',\n'));
+        stopMediaTracks(currentStream);
     }
 
     function handleClickDelete() {
-        deletedCodesRef.current.push(currentCode)
+        deletedCodesRef.current.push(currentCode);
     }
 
     useEffect(() => {
         if (buttonRef && videoRef) {
-            buttonRef.current.addEventListener('click', gotStream)
+            buttonRef.current.addEventListener('click', gotStream);
         }
     }, [buttonRef, videoRef, gotStream])
 
