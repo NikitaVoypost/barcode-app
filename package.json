@@ -9,7 +9,20 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.0",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.4",
+    "twilio": "^3.26.1",
+    "twilio-video": "^2.3.0"
+  },
+  "devDependencies": {
+    "browserify": "^14.3.0",
+    "concurrently": "^3.6.1",
+    "copyfiles": "^1.2.0",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^2.6.3",
+    "serve": "^10.1.2",
+    "watchify": "^3.11.1"
   },
   "scripts": {
     "start": "react-scripts start",
