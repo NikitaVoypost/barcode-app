@@ -7,11 +7,14 @@ const CameraComponent = ({ }) => {
     const buttonRef = useRef(null);
     const selectRef = useRef(null);
     let currentStream;
+    let codeResult = [];
 
     function stopMediaTracks(stream) {
-        stream.getTracks().forEach(track => {
-            track.stop();
-        });
+        if (stream) {
+            stream.getTracks().forEach(track => {
+                track.stop();
+            });
+        }
     }
 
     function gotDevices(mediaDevices) {
@@ -66,13 +69,20 @@ const CameraComponent = ({ }) => {
                 selectedDeviceId = selectRef.current.value;
             }
 
-            codeReader.decodeOnceFromVideoDevice(selectedDeviceId, videoRef.current).then((result) => {
-                console.log(`Code: ${result.text}`)
+            codeReader.decodeFromVideoDevice(selectedDeviceId, videoRef.current, (result) => {
+                if (result && !codeResult.includes(result.text)) {
+                    codeResult.push(result.text)
+                }
             }).catch((err) => {
                 console.error(err)
             })
         })
     };
+
+    function handleClick() {
+        alert(codeResult)
+        stopMediaTracks(currentStream)
+    }
 
     useEffect(() => {
         if (buttonRef && videoRef) {
@@ -100,6 +110,7 @@ const CameraComponent = ({ }) => {
                 </div>
                 <video id='video' ref={videoRef} autoPlay playsinline></video>
             </main>
+            <button onClick={handleClick}>Apply</button>
             <footer>
             </footer>
         </>
