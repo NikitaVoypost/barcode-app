@@ -1,5 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 
+import { BrowserBarcodeReader } from '@zxing/library';
+
 const CameraComponent = ({ }) => {
     const videoRef = useRef();
     const buttonRef = useRef(null);
@@ -42,6 +44,7 @@ const CameraComponent = ({ }) => {
             video: videoConstraints,
             audio: false
         };
+        console.log(constraints)
         navigator.mediaDevices
             .getUserMedia(constraints)
             .then(stream => {
@@ -53,8 +56,23 @@ const CameraComponent = ({ }) => {
             .catch(error => {
                 console.error(error);
             });
-    };
 
+        let selectedDeviceId;
+        const codeReader = new BrowserBarcodeReader()
+        codeReader.getVideoInputDevices().then((videoInputDevices) => {
+            selectedDeviceId = videoInputDevices[0].deviceId
+
+            selectRef.current.onchange = () => {
+                selectedDeviceId = selectRef.current.value;
+            }
+
+            codeReader.decodeOnceFromVideoDevice(selectedDeviceId, videoRef.current).then((result) => {
+                console.log(`Code: ${result.text}`)
+            }).catch((err) => {
+                console.error(err)
+            })
+        })
+    };
 
     useEffect(() => {
         if (buttonRef && videoRef) {
@@ -76,11 +94,11 @@ const CameraComponent = ({ }) => {
             <main>
                 <div className="controls">
                     <button ref={buttonRef}>Get camera</button>
-                    <select ref={selectRef}>
+                    <select ref={selectRef} id='select'>
                         <option></option>
                     </select>
                 </div>
-                <video ref={videoRef} autoPlay playsinline></video>
+                <video id='video' ref={videoRef} autoPlay playsinline></video>
             </main>
             <footer>
             </footer>
