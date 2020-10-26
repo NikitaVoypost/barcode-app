@@ -63,10 +63,11 @@ const CameraComponent = ({ }) => {
         let selectedDeviceId;
         const codeReader = new BrowserBarcodeReader()
         codeReader.getVideoInputDevices().then((videoInputDevices) => {
-            selectedDeviceId = videoInputDevices[0].deviceId
 
-            selectRef.current.onchange = () => {
+            if (videoInputDevices.length > 1) {
                 selectedDeviceId = selectRef.current.value;
+            } else {
+                selectedDeviceId = videoInputDevices[0].deviceId
             }
 
             codeReader.decodeFromVideoDevice(selectedDeviceId, videoRef.current, (result) => {
