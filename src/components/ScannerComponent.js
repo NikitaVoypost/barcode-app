@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import CancelIcon from '@material-ui/icons/Cancel';
 
-import { BrowserBarcodeReader, BrowserDatamatrixCodeReader } from '@zxing/library';
+import { BrowserBarcodeReader } from '@zxing/library';
 
-const CameraComponent = ({ }) => {
+const ScannerComponent = ({ }) => {
     const videoRef = useRef(null);
     const buttonRef = useRef(null);
     const selectRef = useRef(null);
@@ -76,7 +76,10 @@ const CameraComponent = ({ }) => {
             codeReader.decodeFromVideoDevice(selectedDeviceId, videoRef.current, (result) => {
                 if (result && !deletedCodesRef.current.includes(result.text)) {
                     codePositionRef.current.setAttribute('style',
-                        `display: block; top: ${result.resultPoints[0].x}px; left:${result.resultPoints[0].x}px; width:${result.resultPoints[1].x - result.resultPoints[0].x}px; height:${(result.resultPoints[1].x - result.resultPoints[0].x) / 1.5}px;`)
+                        `display: block;
+                        top: ${result.resultPoints[0].x}px; left:${result.resultPoints[0].x}px; 
+                        width:${result.resultPoints[1].x - result.resultPoints[0].x}px; 
+                        height:${(result.resultPoints[1].x - result.resultPoints[0].x) / 1.5}px;`)
                     setCurrentCode(result.text)
                 } else {
                     codePositionRef.current.setAttribute('style', 'display: none;')
@@ -139,4 +142,4 @@ const CameraComponent = ({ }) => {
     )
 }
 
-export default CameraComponent;
+export default ScannerComponent;
