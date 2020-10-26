@@ -52,3 +52,32 @@ footer {
 footer a {
   color: #fff;
 }
+
+.video-wrapper {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 600px;
+  height: 450px;
+  margin: 0 auto;
+}
+.position {
+  position: absolute;
+  border: 2px solid red;
+  display: none;
+}
+
+.deleteIcon {
+  color: white;
+  float: right;
+}
+
+.applyButton {
+  background: #333e5a;
+  border: 1px solid #333e5a;
+  border-radius: 3px;
+  width: 150px;
+  height: 50px;
+  color: white;
+  font-size: 24px;
+}
