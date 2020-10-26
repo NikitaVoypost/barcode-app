@@ -60,13 +60,13 @@ const CameraComponent = ({ }) => {
         if (buttonRef && videoRef) {
             buttonRef.current.addEventListener('click', gotStream)
         }
-    }, [buttonRef, videoRef])
+    }, [buttonRef, videoRef, gotStream])
 
     useEffect(() => {
         if (selectRef) {
             navigator.mediaDevices.enumerateDevices().then(gotDevices);
         }
-    }, [selectRef])
+    }, [selectRef, gotDevices])
 
     return (
         <>
